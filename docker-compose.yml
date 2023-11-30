@@ -3,6 +3,6 @@ services:
   app:
     image: cksiow/cognixus_to_do_list_assessment:1.0
     environment:
-      - JASYPT_PASSWORD=${JASYPT_PASSWORD}
+      - JASYPT_ENCRYPTOR_PASSWORD=${JASYPT_ENCRYPTOR_PASSWORD}
     ports:
       - "8888:8888"
