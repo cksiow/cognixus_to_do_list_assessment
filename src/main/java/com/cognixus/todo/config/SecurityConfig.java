@@ -94,9 +94,10 @@ public class SecurityConfig {
         if (((OAuth2AuthenticationToken) authentication).isAuthenticated()) {
             CognixusOAuth2User oauthUser = (CognixusOAuth2User) authentication.getPrincipal();
 
-            userService.processOAuthPostLogin(oauthUser.getEmail());
+            var user = userService.processOAuthPostLogin(oauthUser.getEmail());
             String accessToken = TokenUtil.generateToken(
                     authentication.getName(),
+                    user.getId(),
                     "congnixus",
                     List.of("Admin"),
                     signKey, tokenExpiryMinute

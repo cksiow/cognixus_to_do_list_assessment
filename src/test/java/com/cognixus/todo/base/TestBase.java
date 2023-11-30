@@ -59,9 +59,8 @@ public abstract class TestBase {
 
     @BeforeAll
     public void beforeAll() {
-        //add full access, librarian access and memeber access token
         //full access
-        String accessToken = generateToken("ck", List.of("Admin"));
+        String accessToken = generateToken("ck", 1L, List.of("Admin"));
         addUserTokens(accessToken);
     }
 
@@ -71,9 +70,10 @@ public abstract class TestBase {
                 .build());
     }
 
-    protected String generateToken(String userName, List<String> roles) {
+    protected String generateToken(String userName, Long id, List<String> roles) {
         return TokenUtil.generateToken(
                 userName,
+                id,
                 "unittest",
                 roles,
                 signKey, 120
@@ -143,7 +143,7 @@ public abstract class TestBase {
             if (!actualResponse.isEmpty()) {
                 if (request.getCustomComparator() == null) {
                     JSONAssert.assertEquals(expectedResponse, actualResponse, true);
-                } else {
+                } else if (request.getResponseFile() != null) {
                     JSONAssert.assertEquals(expectedResponse, actualResponse, request.getCustomComparator());
                 }
             }
@@ -157,11 +157,12 @@ public abstract class TestBase {
 
     }
 
-    public CustomComparator getIdStandardComparator() {
+    public CustomComparator getStandardComparator() {
         // as long as id is numeric = fine, regardless under array or node
         return new CustomComparator(JSONCompareMode.STRICT
-                , new Customization("**.id", new RegexNullableValueMatcher("\\d+", false)
-        ));
+                , new Customization("**.id", new RegexNullableValueMatcher<>("\\d+", false))
+                , new Customization("**.createdBy", new RegexNullableValueMatcher<>("\\d+", false))
+        );
     }
 
     public void verifyInvalidToken(String url, HttpMethod method) {

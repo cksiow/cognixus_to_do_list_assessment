@@ -2,6 +2,7 @@ package com.cognixus.todo.auth;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cognixus.todo.constant.Constant;
+import com.cognixus.todo.model.User;
 import com.cognixus.todo.util.AuthUtil;
 import com.cognixus.todo.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 public class CustomOncePerRequestFilter extends OncePerRequestFilter {
+    //white list for login etc
     private final List<String> permitAllPaths = Arrays.asList
             (
                     "/login.*", "/user/token/refresh", "/h2-console.*", "/favicon.ico",
@@ -57,14 +59,18 @@ public class CustomOncePerRequestFilter extends OncePerRequestFilter {
                 DecodedJWT decodedJWT = null;
                 try {
                     decodedJWT = TokenUtil.verifyToken(authorizationHeader, signKey);
-                    //get the username and roles + pass into security context holder
-                    String username = decodedJWT.getSubject();
+                    //get the user info and roles + pass into security context holder
+                    var user = User.builder()
+                            .username(decodedJWT.getSubject())
+                            .id(decodedJWT.getClaim("id").asLong())
+                            .build();
                     var roles = decodedJWT.getClaim("roles").asList(String.class);
+                    //here is assign roles as authorities to verify access right
                     List<SimpleGrantedAuthority> authorities = roles.stream()
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
                     UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(username, null, authorities);
+                            new UsernamePasswordAuthenticationToken(user, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
                     filterChain.doFilter(request, response);

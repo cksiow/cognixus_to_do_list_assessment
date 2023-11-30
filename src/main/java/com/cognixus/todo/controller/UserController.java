@@ -26,13 +26,5 @@ public class UserController {
         return userService.findByUsername(name);
     }
 
-    @DeleteMapping("/me")
-    public void removeMe() {
-        userService.removeMe();
-    }
 
-    @DeleteMapping("/name/{name}")
-    public void remove(@PathVariable String name) {
-        userService.remove(name);
-    }
 }

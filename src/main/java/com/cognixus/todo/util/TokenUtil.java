@@ -38,17 +38,19 @@ public class TokenUtil {
      * generate the token based on the passing information
      *
      * @param username          user name
+     * @param id                user id
      * @param issuer            issuer that belong to which coming source
      * @param roles             user roles
      * @param signKey           sign key
      * @param tokenExpiryMinute token expiry in minute
      * @return jwt token
      */
-    public static String generateToken(String username, String issuer, List<String> roles, String signKey, Integer tokenExpiryMinute) {
+    public static String generateToken(String username, Long id, String issuer, List<String> roles, String signKey, Integer tokenExpiryMinute) {
         Algorithm algorithm = Algorithm.HMAC256(signKey.getBytes());
         //create token with sign key
         return JWT.create()
                 .withSubject(username)
+                .withClaim("id", id)
                 .withExpiresAt(new Date(System.currentTimeMillis() + (tokenExpiryMinute * 60 * 1000)))
                 .withIssuer(issuer)
                 .withClaim("roles", roles)

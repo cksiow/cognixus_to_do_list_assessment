@@ -51,11 +51,12 @@ public class CustomUsernamePasswordAuthFilter extends UsernamePasswordAuthentica
     @SneakyThrows
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         //when success login
+        //todo: need custom User to store id in future
         User user = (User) authResult.getPrincipal();
         log.info("successful auth: {}", user.getUsername());
-
         String accessToken = TokenUtil.generateToken(
                 user.getUsername(),
+                1L,
                 request.getRequestURL().toString(),
                 user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()),
                 signKey, tokenExpiryMinute
