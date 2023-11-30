@@ -66,6 +66,9 @@ public class SecurityConfig {
                 .antMatchers(POST, "/user").hasAnyAuthority("Admin")
                 .antMatchers(GET, "/user/name/**").hasAnyAuthority("Admin")
                 .antMatchers(DELETE, "/user/name/**").hasAnyAuthority("Admin")
+                .antMatchers(POST, "/todo**").hasAnyAuthority("Admin")
+                .antMatchers(GET, "/todo**").hasAnyAuthority("Admin")
+                .antMatchers(DELETE, "/todo**").hasAnyAuthority("Admin")
                 .and()
                 //google oauth2 login
                 .oauth2Login()

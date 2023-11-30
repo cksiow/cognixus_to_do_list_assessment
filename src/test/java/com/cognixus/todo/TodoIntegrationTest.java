@@ -156,4 +156,18 @@ public class TodoIntegrationTest extends TestBase {
                 .build());
 
     }
+
+    @Test
+    @Order(80)
+    public void When_noAccess_Then_returnInvalid() {
+        //without name
+        this.getRequest(UnitTestRequest.builder()
+                .method(HttpMethod.POST)
+                .url("/todo/completed")
+                .requestFile("data/todo/positive/completed01.json")
+                .responseFile("data/general/negative/invalidTokenResponse.json")
+                .statusResult(status().is4xxClientError())
+                .build());
+
+    }
 }

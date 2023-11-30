@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>posmy.interview</groupId>
-    <artifactId>boot</artifactId>
+    <artifactId>cognixus_to_do_list_assessment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>boot</name>
     <description>Gfk Assessment</description>
@@ -79,6 +79,11 @@
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.19.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
         </dependency>
     </dependencies>
 
