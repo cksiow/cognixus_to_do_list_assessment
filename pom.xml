@@ -10,9 +10,9 @@
     </parent>
     <groupId>posmy.interview</groupId>
     <artifactId>cognixus_to_do_list_assessment</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>boot</name>
-    <description>Gfk Assessment</description>
+    <version>1.0</version>
+    <name>cognixus_to_do_list_assessment</name>
+    <description>Cognixus Assessment</description>
 
     <properties>
         <java.version>17</java.version>
