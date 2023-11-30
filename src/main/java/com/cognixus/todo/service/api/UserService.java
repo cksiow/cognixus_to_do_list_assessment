@@ -30,15 +30,10 @@ public interface UserService extends UserDetailsService {
      *
      * @param username name
      */
-    void remove(String username);
 
-    /**
-     * remove login user
-     */
-    void removeMe();
 
     /**
      * google login success handling
      */
-    void processOAuthPostLogin(String username);
+    User processOAuthPostLogin(String username);
 }

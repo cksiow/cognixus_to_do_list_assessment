@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "pending01",
+    "description": "pending task 01",
+    "completed": false,
+    "createdBy": 1
+  },
+  {
+    "id": 2,
+    "name": "completed01",
+    "description": "completed task 01",
+    "completed": true,
+    "createdBy": 1
+  },
+  {
+    "id": 3,
+    "name": "completed02",
+    "description": "completed task 02",
+    "completed": true,
+    "createdBy": 1
+  }
+]

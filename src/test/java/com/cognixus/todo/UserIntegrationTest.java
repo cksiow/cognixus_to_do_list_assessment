@@ -33,7 +33,7 @@ public class UserIntegrationTest extends TestBase {
                 .responseFile("data/user/positive/nameResponse.json")
                 .token(this.getToken())
                 .statusResult(status().isOk())
-                .customComparator(getIdStandardComparator())
+                .customComparator(getStandardComparator())
                 .build());
     }
 

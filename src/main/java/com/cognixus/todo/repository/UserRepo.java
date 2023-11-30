@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
     /**
-     * find user by user name
+     * find user by username
      *
      * @param username user name
      * @return user

@@ -1,12 +1,9 @@
 package com.cognixus.todo.model;
 
 
+import com.cognixus.todo.audit.Audit;
 import com.cognixus.todo.snowflake.SnowflakeId;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -14,12 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name = "T_TODO")
+
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
 @ToString
-public class Todo implements SnowflakeId<Long> {
+public class Todo implements SnowflakeId<Long>, Audit {
     @Id
     private Long id;
 
@@ -27,17 +25,18 @@ public class Todo implements SnowflakeId<Long> {
     @Column(nullable = false)
     private String name;
 
-    
+
+    //description
     @Column(nullable = false)
-    private String author;
+    private String description;
+
+    //is completed
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean completed = false;
 
     @Column(nullable = false)
-    private Integer publishYear;
-
-    //avoid this field get set when create/update
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @Column
-    private Long borrowBy;
+    private Long createdBy;
 
 
 }

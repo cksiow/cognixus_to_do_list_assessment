@@ -66,6 +66,9 @@ public class SecurityConfig {
                 .antMatchers(POST, "/user").hasAnyAuthority("Admin")
                 .antMatchers(GET, "/user/name/**").hasAnyAuthority("Admin")
                 .antMatchers(DELETE, "/user/name/**").hasAnyAuthority("Admin")
+                .antMatchers(POST, "/todo**").hasAnyAuthority("Admin")
+                .antMatchers(GET, "/todo**").hasAnyAuthority("Admin")
+                .antMatchers(DELETE, "/todo**").hasAnyAuthority("Admin")
                 .and()
                 //google oauth2 login
                 .oauth2Login()
@@ -94,9 +97,10 @@ public class SecurityConfig {
         if (((OAuth2AuthenticationToken) authentication).isAuthenticated()) {
             CognixusOAuth2User oauthUser = (CognixusOAuth2User) authentication.getPrincipal();
 
-            userService.processOAuthPostLogin(oauthUser.getEmail());
+            var user = userService.processOAuthPostLogin(oauthUser.getEmail());
             String accessToken = TokenUtil.generateToken(
                     authentication.getName(),
+                    user.getId(),
                     "congnixus",
                     List.of("Admin"),
                     signKey, tokenExpiryMinute
