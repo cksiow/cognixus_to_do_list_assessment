@@ -1,1 +1,2 @@
-set JASYPT_PASSWORD=%1 && docker-compose up
+set JASYPT_ENCRYPTOR_PASSWORD=%1
+docker-compose up
